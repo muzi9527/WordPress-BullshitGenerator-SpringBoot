@@ -5,9 +5,9 @@ server:
 spring:
   datasource:
     name: goupi_dnmd_me
-    url: jdbc:mysql://23.94.98.165:3306/goupi_dnmd_me?useUnicode=true&useSSL=false
+    url: jdbc:mysql://localhost:3306/goupi_dnmd_me?useUnicode=true&useSSL=false
     username: goupi_dnmd_me
-    password: YYtiHtGxaR
+    password: sakhd
 
 # Mybatis
 mybatis-plus:
