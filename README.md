@@ -7,7 +7,9 @@ Java新手，耗时7小时。
 
 本项目测试博客地址：http://goupi.dnmd.me
 
-仅作查看效果，服务器很垃圾，接口就不开放了。
+测试接口:http://47.242.140.203:9527/bullshit?title=MJJ
+
+生成标题为MJJ的狗屁文章
 # 安装
 
 拉取代码后编辑*resource*目录的*application.yml*文件。
