@@ -2,7 +2,6 @@ package com.muzi9527.BullshitGenerator.functions;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
-import org.junit.Test;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,32 +13,34 @@ import java.io.IOException;
 @RestController
 public class BullshitPost {
     @GetMapping("/bullshit")
-    public String main(String title,@RequestParam(required = false) Integer circulate) throws IOException{
-        if (circulate == null){
-            circulate=1;
+    public String main(String title, @RequestParam(required = false) Integer circulate) throws IOException {
+        if (circulate == null) {
+            circulate = 1;
         }
-        for (int i=0;i<circulate;i++) {
-            String url1 = "http://localhost:9527/insert";
-            Connection con1 = Jsoup.connect(url1);
-            try {
-                con1.data("postContent", BullshitGenerator.random(title));
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        if (circulate > 10) {
+            return "哥，一次性塞不下那么多了。";
+        } else
+            for (int i = 0; i < circulate; i++) {
+                String url1 = "http://localhost:9527/insert";
+                Connection con1 = Jsoup.connect(url1);
+                try {
+                    con1.data("postContent", BullshitGenerator.random(title));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                con1.data("postTitle", title).get();
+                try {
+                    Thread.sleep(1000 * 1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                ;
             }
-            con1.data("postTitle", title).get();
-            try {
-                Thread.sleep(1000*1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            ;
-        }
         return "已完成，请自行检查是否成功";
     }
 
     //此http请求方式已弃用
-    @Test
-    public void getBullShit(){
+    public void getBullShit() {
 //        String title="憨批";int num;
 //        //生成随机汉字
 //        //String str = String.valueOf(getRandomChar(3));//生成三个字
@@ -69,10 +70,10 @@ public class BullshitPost {
     }
 
     public static String getRandomChar(int num) {
-        String strnum="";
-        for (int i=0;i<num;i++){
-            String str= String.valueOf((char) (0x4e00 + (int) (Math.random() * (0x9fa5 - 0x4e00 + 1))));
-            strnum=str+strnum;
+        String strnum = "";
+        for (int i = 0; i < num; i++) {
+            String str = String.valueOf((char) (0x4e00 + (int) (Math.random() * (0x9fa5 - 0x4e00 + 1))));
+            strnum = str + strnum;
         }
         return strnum;
     }
