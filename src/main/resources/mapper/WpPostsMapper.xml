@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.muzi9527.BullshitGenerator.mapper.WpPostsMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.muzi9527.BullshitGenerator.entity.WpPosts">
+        <id column="ID" property="id" />
+        <result column="post_author" property="postAuthor" />
+        <result column="post_date" property="postDate" />
+        <result column="post_date_gmt" property="postDateGmt" />
+        <result column="post_content" property="postContent" />
+        <result column="post_title" property="postTitle" />
+        <result column="post_excerpt" property="postExcerpt" />
+        <result column="post_status" property="postStatus" />
+        <result column="comment_status" property="commentStatus" />
+        <result column="ping_status" property="pingStatus" />
+        <result column="post_password" property="postPassword" />
+        <result column="post_name" property="postName" />
+        <result column="to_ping" property="toPing" />
+        <result column="pinged" property="pinged" />
+        <result column="post_modified" property="postModified" />
+        <result column="post_modified_gmt" property="postModifiedGmt" />
+        <result column="post_content_filtered" property="postContentFiltered" />
+        <result column="post_parent" property="postParent" />
+        <result column="guid" property="guid" />
+        <result column="menu_order" property="menuOrder" />
+        <result column="post_type" property="postType" />
+        <result column="post_mime_type" property="postMimeType" />
+        <result column="comment_count" property="commentCount" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ID, post_author, post_date, post_date_gmt, post_content, post_title, post_excerpt, post_status, comment_status, ping_status, post_password, post_name, to_ping, pinged, post_modified, post_modified_gmt, post_content_filtered, post_parent, guid, menu_order, post_type, post_mime_type, comment_count
+    </sql>
+
+</mapper>

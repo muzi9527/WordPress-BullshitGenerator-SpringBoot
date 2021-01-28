@@ -1,0 +1,15 @@
+server:
+  # port
+  port: 9527
+
+spring:
+  datasource:
+    name: goupi_dnmd_me
+    url: jdbc:mysql://localhost:3306/goupi_dnmd_me?useUnicode=true&useSSL=false
+    username: goupi_dnmd_me
+    password: sakndaklnd
+
+# Mybatis
+mybatis-plus:
+  typeAliasesPackage: com.muzi9527.BullshitGenerator.entity
+  mapperLocations: classpath:/mapper/**.xml
