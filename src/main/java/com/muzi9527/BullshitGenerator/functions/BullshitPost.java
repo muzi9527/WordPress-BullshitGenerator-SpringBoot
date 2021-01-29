@@ -1,11 +1,13 @@
 package com.muzi9527.BullshitGenerator.functions;
 
+import com.alibaba.fastjson.JSONObject;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import com.muzi9527.BullshitGenerator.functions.JSONResponse;
 
 import java.io.IOException;
 
@@ -13,30 +15,35 @@ import java.io.IOException;
 @RestController
 public class BullshitPost {
     @GetMapping("/bullshit")
-    public String main(String title, @RequestParam(required = false) Integer circulate) throws IOException {
+    public JSONObject main(String title, @RequestParam(required = false) Integer circulate) throws InterruptedException {
+        //生成文章，此处逻辑有待优化
+        String content = BullshitGenerator.random(title);
+        //判断circulate是否为空，为空默认赋值为1
         if (circulate == null) {
             circulate = 1;
         }
-        if (circulate > 10) {
-            return "哥，一次性塞不下那么多了。";
+        //判断插入标签
+        boolean status = title.contains("</");
+        if (status) {
+            return JSONResponse.response_400("此标题含有屏蔽符号");
+        }
+        //判断circulate是否大于10
+        else if (circulate > 10) {
+            return JSONResponse.response_400("哥，一次性塞不下那么多了");
         } else
             for (int i = 0; i < circulate; i++) {
                 String url1 = "http://localhost:9527/insert";
                 Connection con1 = Jsoup.connect(url1);
+                con1.data("postContent", content);
                 try {
-                    con1.data("postContent", BullshitGenerator.random(title));
-                } catch (InterruptedException e) {
+                    con1.data("postTitle", title).get();
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
-                con1.data("postTitle", title).get();
-                try {
-                    Thread.sleep(1000 * 1);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                ;
+                Thread.sleep(1000 * 1);
+
             }
-        return "已完成，请自行检查是否成功";
+        return JSONResponse.response_200(title, content);
     }
 
     //此http请求方式已弃用
