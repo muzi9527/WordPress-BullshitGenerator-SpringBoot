@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import com.muzi9527.BullshitGenerator.functions.JSONResponse;
 
 import java.io.IOException;
 
@@ -16,14 +15,14 @@ import java.io.IOException;
 public class BullshitPost {
     @GetMapping("/bullshit")
     public JSONObject main(String title, @RequestParam(required = false) Integer circulate) throws InterruptedException {
-        //生成文章，此处逻辑有待优化
+        //生成初始文章，此处逻辑有待优化
         String content = BullshitGenerator.random(title);
         //判断circulate是否为空，为空默认赋值为1
         if (circulate == null) {
             circulate = 1;
         }
         //判断插入标签
-        boolean status = title.contains("</");
+        boolean status = title.contains("<");
         if (status) {
             return JSONResponse.response_400("此标题含有屏蔽符号");
         }
@@ -32,6 +31,7 @@ public class BullshitPost {
             return JSONResponse.response_400("哥，一次性塞不下那么多了");
         } else
             for (int i = 0; i < circulate; i++) {
+                content = BullshitGenerator.random(title);
                 String url1 = "http://localhost:9527/insert";
                 Connection con1 = Jsoup.connect(url1);
                 con1.data("postContent", content);
